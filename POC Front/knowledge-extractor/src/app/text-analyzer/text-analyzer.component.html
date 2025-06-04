@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>🧠 Analyse de texte (POS, NER & Thèmes)</h2>
+
+  <textarea [(ngModel)]="textInput" rows="6" placeholder="Tape ton texte ici..."></textarea>
+
+  <div class="buttons">
+    <button (click)="analyzeText()">🔍 Analyse POS & NER</button>
+    <button (click)="getThemesWithLLM()">💡 Thèmes via IA</button>
+  </div>
+
+  <div *ngIf="tokens.length > 0">
+    <h3>🔠 POS Tagging</h3>
+    <ul class="list">
+      <li *ngFor="let token of tokens">
+        <span class="tag token">{{ token.text }}</span> → <span class="pos">{{ token.pos }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="entities.length > 0">
+    <h3>🏷️ Entités nommées (NER)</h3>
+    <ul class="list">
+      <li *ngFor="let ent of entities">
+        <span class="tag entity">{{ ent.text }}</span> → <span class="entity-label">{{ ent.label }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="isLoadingLLM" class="loading">
+    ⏳ Analyse sémantique en cours...
+  </div>
+
+  <div *ngIf="themes.length > 0">
+    <h3>🎯 Thèmes identifiés :</h3>
+    <div class="themes">
+      <span class="theme-badge" *ngFor="let theme of themes">{{ theme }}</span>
+    </div>
+  </div>
+</div>
